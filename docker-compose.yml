@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # 1. Repo Services (PostgreSQL + PostGIS)
+  db:
+    image: postgis/postgis:16-3.4
+    container_name: mmo_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin           # Username for the database
+      POSTGRES_PASSWORD: password    # Database password (simple for development)
+      POSTGRES_DB: open_world_game   # Default database name
+    ports:
+      - "5432:5432"                  # Expose port for Java backend connection
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Data persistence, no loss on restart
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d open_world_game"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Database Management Interface (PGAdmin 4) Opt-In
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: mmo_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@game.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
