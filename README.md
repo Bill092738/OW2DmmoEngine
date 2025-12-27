@@ -2,7 +2,7 @@
 
 `README Version Dec_12_2025`
 
-A browser-first open‑world MMO engine prototype: **Next.js client + Spring Boot server**, built for real-time iteration.
+A browser-first open-world MMO engine prototype: **Next.js client + Spring Boot server**, built for real-time iteration.
 
 - **Frontend:** Next.js + Tailwind + Phaser sandbox ([frontend/src/app/page.tsx](frontend/src/app/page.tsx), [frontend/src/components/GameCanvas.tsx](frontend/src/components/GameCanvas.tsx), [frontend/src/components/GameCanvasWrapper.tsx](frontend/src/components/GameCanvasWrapper.tsx))
 - **Backend:** Spring Boot API (PoC auth ping) ([backend/src/main/java/com/game/server/api/AuthController.java](backend/src/main/java/com/game/server/api/AuthController.java))
