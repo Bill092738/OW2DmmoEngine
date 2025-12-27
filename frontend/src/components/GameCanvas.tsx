@@ -4,25 +4,25 @@ import { useEffect, useRef } from 'react';
 import * as Phaser from 'phaser';
 
 const GameCanvas = () => {
-    // 使用 ref 来保存游戏实例，防止重渲染时丢失或重复创建
+    // 使用 ref 來保存遊戲實例，防止 React 重渲染時重複創建遊戲
     const gameRef = useRef<Phaser.Game | null>(null);
 
     useEffect(() => {
-        // 防止 React Strict Mode 在开发环境下创建两个 Canvas
+        // 防止 React Strict Mode 在開發環境下創建兩個 Canvas
         if (gameRef.current) return;
 
-        // 1. 定义 Phaser 配置
+        // 1. 定義 Phaser 配置
         const config: Phaser.Types.Core.GameConfig = {
-            type: Phaser.AUTO, // 自动选择 WebGL 或 Canvas
+            type: Phaser.AUTO, // 自動選擇 WebGL
             width: 800,
             height: 600,
-            parent: 'phaser-container', // 挂载点的 DOM ID
+            parent: 'phaser-container', // 綁定到下方的 div id
             backgroundColor: '#2d2d2d',
             physics: {
                 default: 'arcade',
                 arcade: {
-                    gravity: { x: 0, y: 0 }, // 俯视视角不需要重力
-                    debug: true // 开发模式开启调试框
+                    gravity: { x: 0, y: 0 }, // 俯視視角不需要重力
+                    debug: true // 開發模式開啟綠色調試框
                 }
             },
             scene: {
@@ -32,12 +32,12 @@ const GameCanvas = () => {
             }
         };
 
-        // 2. 初始化游戏
+        // 2. 初始化遊戲
         gameRef.current = new Phaser.Game(config);
 
-        // --- 临时的场景函数 (之后会移到单独文件) ---
+        // --- 臨時的場景函數 ---
         function preload(this: Phaser.Scene) {
-            // 暂时画一个方块代替图片，避免找不到资源的报错
+            // 載入一個測試用的圖片 (使用 Phaser 官方範例圖)
             this.load.setBaseURL('https://labs.phaser.io');
             this.load.image('logo', 'assets/sprites/phaser3-logo.png');
         }
@@ -45,13 +45,13 @@ const GameCanvas = () => {
         function create(this: Phaser.Scene) {
             const logo = this.add.image(400, 150, 'logo');
             
-            // 添加一段文字
-            this.add.text(100, 450, 'Fedora MMO Client Ready!', { 
-                fontSize: '32px', 
+            // 添加一段文字證明成功
+            this.add.text(280, 450, 'MMO Client Online', { 
+                fontSize: '24px', 
                 color: '#ffffff' 
             });
 
-            // 简单的动画
+            // 簡單的動畫
             this.tweens.add({
                 targets: logo,
                 y: 450,
@@ -63,10 +63,10 @@ const GameCanvas = () => {
         }
 
         function update(this: Phaser.Scene) {
-            // 游戏循环逻辑
+            // 遊戲循環邏輯 (每一幀都會執行)
         }
 
-        // 3. 组件卸载时的清理函数
+        // 3. 組件卸載時的清理函數
         return () => {
             if (gameRef.current) {
                 gameRef.current.destroy(true);
@@ -75,8 +75,11 @@ const GameCanvas = () => {
         };
     }, []);
 
-    // 返回一个 div 作为 Phaser 的挂载点
-    return <div id="phaser-container" className="rounded-lg overflow-hidden shadow-2xl" />;
+    return (
+        <div className="flex justify-center items-center h-full">
+            <div id="phaser-container" className="rounded-lg overflow-hidden border-4 border-gray-700 shadow-2xl" />
+        </div>
+    );
 };
 
 export default GameCanvas;
