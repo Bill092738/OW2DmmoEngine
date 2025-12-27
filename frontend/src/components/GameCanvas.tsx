@@ -37,7 +37,7 @@ const GameCanvas = () => {
 
         // --- 臨時的場景函數 ---
         function preload(this: Phaser.Scene) {
-            // 載入一個測試用的圖片 (使用 Phaser 官方範例圖)
+            // 載入一個測試用的圖片 (使用 Phaser 官方範例圖) —— 僅供 PoC/開發使用，未來請改為載入專案內部的本地資源
             this.load.setBaseURL('https://labs.phaser.io');
             this.load.image('logo', 'assets/sprites/phaser3-logo.png');
         }
