@@ -1,35 +1,36 @@
 services:
-  # 1. Repo Services (PostgreSQL + PostGIS)
+  # 1. Repo Services (MariaDB)
   db:
-    image: postgis/postgis:16-3.4
+    image: mariadb:11
     container_name: mmo_db
     restart: always
     environment:
-      POSTGRES_USER: admin           # Username for the database
-      POSTGRES_PASSWORD: password    # Database password (simple for development)
-      POSTGRES_DB: open_world_game   # Default database name
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: open_world_game
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: password
     ports:
-      - "5432:5432"                  # Expose port for Java backend connection
+      - "3306:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Data persistence, no loss on restart
+      - mariadb_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d open_world_game"]
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -uadmin -ppassword --silent"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
 
-  # 2. Database Management Interface (PGAdmin 4) Opt-In
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: mmo_pgadmin
+  # 2. Database Management Interface (phpMyAdmin) Opt-In
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: mmo_phpmyadmin
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@game.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PMA_HOST: db
+      PMA_PORT: 3306
     ports:
       - "5050:80"
     depends_on:
       - db
 
 volumes:
-  postgres_data:
+  mariadb_data:

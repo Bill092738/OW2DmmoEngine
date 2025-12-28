@@ -12,7 +12,8 @@ public class CorsConfig implements WebMvcConfigurer {
             // Adjust for your deployed frontend origin(s)
             .allowedOrigins(
                 "http://localhost:3000",
-                "http://127.0.0.1:3000"
+                "http://127.0.0.1:3000",
+                "http://13.233.97.20:3000"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*");
