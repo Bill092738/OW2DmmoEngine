@@ -34,8 +34,10 @@ Server entrypoint: [`com.game.server.MmoApplication`](backend/src/main/java/com/
 From `frontend/`:
 
 ```bash
-npm install
-npm run dev
+export NEXT_PUBLIC_API_BASE_URL="http://REPLACE-WITH-YOUR-IP/API-DOMAIN:8080"
+printenv | grep NEXT_PUBLIC_API_BASE_URL # To verify
+bun install # bun is recommended for this project
+bun run dev
 ```
 
 App runs on **http://localhost:3000**.
