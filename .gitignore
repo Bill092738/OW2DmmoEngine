@@ -37,3 +37,7 @@ next-env.d.ts
 
 # backend target
 backend/target
+
+bun.lock
+
+package-lock.json
