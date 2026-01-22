@@ -13,7 +13,8 @@ public class CorsConfig implements WebMvcConfigurer {
             .allowedOrigins(
                 "http://localhost:3000",
                 "http://127.0.0.1:3000",
-                "http://13.233.97.20:3000"
+                "http://3.110.236.159:3000",
+		        "http://demo.tftcloud.eu.org:3000"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*");
